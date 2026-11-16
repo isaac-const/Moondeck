@@ -1,0 +1,115 @@
+import type { Dictionary } from "./types";
+
+/** English copy. Typed from the PT dictionary, so a missing key fails the build. */
+export const en: Dictionary = {
+  common: {
+    appName: "MoonDeck",
+    phase: "Phase 0",
+    preview: "Preview",
+    later: "Arrives in {{phase}}",
+  },
+  nav: {
+    label: "Main navigation",
+    modes: "Modes",
+    keys: "Keys",
+    appearance: "Appearance",
+    audio: "Audio",
+    general: "General",
+    about: "About",
+    toggleTheme: "Toggle theme",
+    skipToContent: "Skip to content",
+  },
+  modes: {
+    title: "Modes",
+    description: "A mode is a layer of actions. The mode key switches the active layer.",
+    newMode: "New mode",
+    notice: "Preview with sample data. Editing modes arrives in Phase 5.",
+    actionsCount: "{{count}} actions",
+    actionsCount_one: "{{count}} action",
+    actionsCount_other: "{{count}} actions",
+    modeKey: "Mode key",
+    actionKeys: "Action keys",
+    clusterTitle: "Keys on your keyboard",
+    clusterBody:
+      "Home switches modes. PgUp, PgDn and End fire the action mapped to the active mode. Insert and Delete stay free.",
+    clusterLabel: "Keyboard navigation cluster",
+    names: {
+      soundboard: "Soundboard",
+      shortcuts: "Shortcuts",
+      apps: "Apps",
+    },
+    actions: {
+      applause: "Applause",
+      horn: "Air horn",
+      farewell: "Goodbye",
+      copy: "Copy",
+      paste: "Paste",
+      undo: "Undo",
+      terminal: "Terminal",
+      browser: "Browser",
+      music: "Music",
+    },
+    kinds: {
+      sound: "Sound",
+      shortcut: "Shortcut",
+      app: "App",
+    },
+  },
+  keys: {
+    title: "Keys",
+    description: "Which keys become triggers, and which one changes the mode.",
+    emptyTitle: "Choose your keys",
+    emptyBody:
+      "The keys you never use — Home, PgUp, PgDn, End — become a panel. Key capture arrives in Phase 5.",
+  },
+  appearance: {
+    title: "Appearance",
+    description: "Theme, motion and how the overlay looks.",
+    themeTitle: "Theme",
+    themeDescription: "Defaults to your system setting.",
+    themeSystem: "System",
+    themeLight: "Light",
+    themeDark: "Dark",
+    motionTitle: "Motion",
+    motionDescription: "Cuts animation across the app.",
+    motionReduce: "Reduce motion",
+    overlayTitle: "Overlay",
+    overlayDescription: "Opacity, size, position and display time.",
+    paletteTitle: "Mode colours",
+    paletteDescription:
+      "Each mode gets an identity colour. Amber is reserved for state: recording, live, action firing.",
+  },
+  audio: {
+    title: "Audio",
+    description: "Sound output and virtual microphone.",
+    emptyTitle: "No devices loaded yet",
+    emptyBody:
+      "Device listing, sound testing and the virtual microphone assistant arrive in Phase 4.",
+  },
+  general: {
+    title: "General",
+    description: "Language, startup and emergency pause.",
+    languageTitle: "Language",
+    languageDescription: "Switches the interface immediately.",
+    autostartTitle: "Launch at login",
+    autostartDescription: "Starts with your session.",
+    emergencyTitle: "Emergency shortcut",
+    emergencyDescription: "Pauses the app and releases the keys.",
+  },
+  about: {
+    title: "About",
+    description: "Version, stack and licence.",
+    tagline: "A deck of contextual actions for underused keys.",
+    version: "Version",
+    stack: "Stack",
+    stackValue: "Tauri 2 · React 19 · Rust",
+    license: "Licence",
+    licenseValue: "To be defined",
+    licenseNote: "Decide before publishing anything.",
+    links: "Links",
+    repository: "Repository",
+    repositoryPending: "Not published yet",
+  },
+};
+
+export default en;

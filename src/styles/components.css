@@ -1,0 +1,363 @@
+/* ============================================================================
+   MoonDeck — primitivas do sistema
+   Tailwind resolve layout e espaçamento; aqui vivem as peças com estado e
+   movimento (botão, keycap, nav, segmentado, switch, card, tooltip).
+   Motivo: essas transições enumeram propriedades exatas e ficam ilegíveis
+   como utilitários inline.
+   ========================================================================== */
+
+@layer components {
+  /* ---------------------------------------------------------------- botão */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 30px;
+    padding-inline: 12px;
+    border: 1px solid transparent;
+    border-radius: var(--r-md);
+    background: transparent;
+    color: var(--ink);
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    cursor: pointer;
+    white-space: nowrap;
+    transition:
+      background-color var(--duration-quick) var(--ease-smooth-out),
+      border-color var(--duration-quick) var(--ease-smooth-out),
+      color var(--duration-quick) var(--ease-smooth-out),
+      box-shadow var(--duration-quick) var(--ease-smooth-out),
+      transform var(--duration-micro) var(--ease-smooth-out);
+  }
+  .btn:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+  .btn:disabled {
+    opacity: 0.42;
+    cursor: not-allowed;
+  }
+  .btn--primary {
+    background: var(--accent);
+    border-color: var(--accent-strong);
+    color: var(--accent-ink);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.28);
+  }
+  .btn--primary:hover:not(:disabled) {
+    background: var(--accent-strong);
+  }
+  .btn--secondary {
+    background: var(--surface-raised);
+    border-color: var(--line-strong);
+    color: var(--ink);
+  }
+  .btn--secondary:hover:not(:disabled) {
+    background: var(--surface-hover);
+  }
+  .btn--ghost {
+    color: var(--ink-2);
+  }
+  .btn--ghost:hover:not(:disabled) {
+    background: var(--surface-hover);
+    color: var(--ink);
+  }
+  .btn--sm {
+    height: 26px;
+    padding-inline: 9px;
+    font-size: 12px;
+  }
+  .btn--icon {
+    width: 30px;
+    padding: 0;
+  }
+
+  /* --------------------------------------------------------------- keycap */
+  .keycap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 30px;
+    padding-inline: 8px;
+    border: 1px solid var(--key-edge-line);
+    border-bottom: 2px solid var(--key-edge);
+    border-radius: var(--r-sm);
+    background: var(--key-bg);
+    color: var(--key-face);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+    transition:
+      background-color var(--duration-quick) var(--ease-smooth-out),
+      border-color var(--duration-quick) var(--ease-smooth-out),
+      color var(--duration-quick) var(--ease-smooth-out);
+  }
+  .keycap--sm {
+    height: 24px;
+    min-width: 24px;
+    font-size: 9.5px;
+  }
+  .keycap--mode {
+    border-color: var(--accent-line);
+    color: var(--accent-strong);
+  }
+  /* Estado: a tecla está executando agora. */
+  .keycap--live {
+    border-color: var(--live-line);
+    background: var(--live-quiet);
+    color: var(--live-strong);
+  }
+  .keycap--ghost {
+    border-style: dashed;
+    border-bottom-width: 1px;
+    background: transparent;
+    color: var(--ink-3);
+  }
+
+  /* ------------------------------------------------------------------ nav */
+  .nav-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 34px;
+    padding-inline: 10px;
+    border-radius: var(--r-md);
+    color: var(--ink-2);
+    font-size: 13px;
+    font-weight: 450;
+    transition:
+      background-color var(--duration-quick) var(--ease-smooth-out),
+      color var(--duration-quick) var(--ease-smooth-out);
+  }
+  .nav-item:hover {
+    background: var(--surface-hover);
+    color: var(--ink);
+  }
+  .nav-item[aria-current="page"] {
+    background: var(--surface-raised);
+    color: var(--ink);
+  }
+  .nav-item[aria-current="page"]::before {
+    content: "";
+    position: absolute;
+    left: -1px;
+    top: 50%;
+    width: 2px;
+    height: 14px;
+    border-radius: 2px;
+    background: var(--accent);
+    transform: translateY(-50%);
+  }
+
+  /* ------------------------------------------------------- segmented control */
+  .seg {
+    position: relative;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    padding: 2px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--bg-canvas);
+  }
+  .seg__pill {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    bottom: 2px;
+    border: 1px solid var(--line-strong);
+    border-radius: 6px;
+    background: var(--surface-raised);
+    box-shadow: var(--shadow-1);
+    transition:
+      transform var(--duration-fast) var(--ease-smooth-out),
+      width var(--duration-fast) var(--ease-smooth-out);
+  }
+  .seg__item {
+    position: relative;
+    z-index: 1;
+    height: 26px;
+    padding-inline: 10px;
+    border-radius: 6px;
+    color: var(--ink-2);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color var(--duration-quick) var(--ease-smooth-out);
+  }
+  .seg__item:hover {
+    color: var(--ink);
+  }
+  .seg__item[aria-checked="true"] {
+    color: var(--ink);
+  }
+  .seg__item:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+
+  /* ---------------------------------------------------------------- switch */
+  .switch {
+    position: relative;
+    width: 34px;
+    height: 20px;
+    flex: none;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: var(--surface-active);
+    cursor: pointer;
+    transition:
+      background-color var(--duration-fast) var(--ease-smooth-out),
+      border-color var(--duration-fast) var(--ease-smooth-out);
+  }
+  .switch[data-state="checked"] {
+    background: var(--accent);
+    border-color: var(--accent-strong);
+  }
+  .switch[disabled] {
+    cursor: not-allowed;
+    opacity: 0.42;
+  }
+  .switch__thumb {
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background: var(--ink-3);
+    transform: translateX(1px);
+    transition:
+      transform var(--duration-fast) var(--ease-bounce),
+      background-color var(--duration-fast) var(--ease-smooth-out);
+  }
+  .switch[data-state="checked"] .switch__thumb {
+    background: var(--accent-ink);
+    transform: translateX(16px);
+  }
+
+  /* ------------------------------------------------------------------ card */
+  .card {
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--surface);
+  }
+
+  /* ------------------------------------------------------------- mode row */
+  .mode-row {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: var(--r-md);
+    text-align: left;
+    cursor: pointer;
+    transition:
+      background-color var(--duration-quick) var(--ease-smooth-out),
+      box-shadow var(--duration-quick) var(--ease-smooth-out);
+  }
+  .mode-row:hover {
+    background: var(--surface-hover);
+  }
+  .mode-row[data-selected="true"] {
+    background: var(--surface-raised);
+    box-shadow: inset 0 0 0 1px var(--line-strong);
+  }
+
+  /* ---------------------------------------------------------- action tile */
+  .action-tile {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--surface-raised);
+    transition:
+      border-color var(--duration-quick) var(--ease-smooth-out),
+      background-color var(--duration-quick) var(--ease-smooth-out);
+  }
+  .action-tile:hover {
+    border-color: var(--line-strong);
+    background: var(--surface-hover);
+  }
+
+  /* ---------------------------------------------------------------- notice */
+  .notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--r-md);
+    background: var(--surface);
+    color: var(--ink-2);
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+
+  /* --------------------------------------------------------------- tooltip */
+  .tooltip {
+    max-width: 260px;
+    padding: 5px 8px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r-sm);
+    background: var(--surface-raised);
+    color: var(--ink);
+    font-size: 11.5px;
+    line-height: 1.45;
+    box-shadow: var(--shadow-2);
+    animation: tooltip-in var(--duration-quick) var(--ease-out);
+  }
+  @keyframes tooltip-in {
+    from {
+      opacity: 0;
+      transform: translateY(2px) scale(var(--scale-small));
+    }
+  }
+
+  /* ------------------------------------------------------------ skip link */
+  .skip-link {
+    position: fixed;
+    left: 12px;
+    top: 12px;
+    z-index: 60;
+    padding: 8px 12px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r-md);
+    background: var(--surface-raised);
+    color: var(--ink);
+    font-size: 12.5px;
+    box-shadow: var(--shadow-2);
+    transform: translateY(calc(-100% - 16px));
+    transition: transform var(--duration-fast) var(--ease-smooth-out);
+  }
+  .skip-link:focus-visible {
+    transform: translateY(0);
+  }
+}
+
+/* Movimento reduzido: global, vale para CSS e para o atributo do app. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+[data-motion="reduced"] *,
+[data-motion="reduced"] *::before,
+[data-motion="reduced"] *::after {
+  animation-duration: 1ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 1ms !important;
+  scroll-behavior: auto !important;
+}

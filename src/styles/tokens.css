@@ -1,0 +1,141 @@
+/* ============================================================================
+   MoonDeck — design tokens
+   ----------------------------------------------------------------------------
+   Regra da paleta (não quebrar):
+   1. A base é fria: tinta noturna, cinzas azulados, branco-luar. O app é a lua.
+   2. --accent é a identidade (luar). Em tema escuro ele é prata; em tema claro
+      vira tinta-slate, porque prata sobre papel não passa em contraste.
+   3. --live (âmbar) é ESTADO, nunca decoração: gravando, ao vivo, ação em
+      execução, modo ativo. Não usar em botão, borda de card ou ícone comum.
+   4. Cores de modo são identidade de dado (vêm da config), não do sistema.
+   ========================================================================== */
+
+:root {
+  color-scheme: dark;
+
+  --bg: #090c10;
+  --bg-canvas: #0b0f14;
+  --surface: #11161d;
+  --surface-raised: #161d26;
+  --surface-hover: #1b242f;
+  --surface-active: #222d3a;
+
+  --line: #212a35;
+  --line-strong: #33404f;
+
+  --ink: #e7ebf2;
+  --ink-2: #a6b1c0;
+  --ink-3: #8592a3;
+
+  /* luar */
+  --accent: #d7e2f2;
+  --accent-strong: #f2f7ff;
+  --accent-quiet: rgba(215, 226, 242, 0.08);
+  --accent-line: rgba(215, 226, 242, 0.22);
+  --accent-ink: #080c11;
+
+  /* âmbar: só estado */
+  --live: #e9a955;
+  --live-strong: #f8c88c;
+  --live-quiet: rgba(233, 169, 85, 0.13);
+  --live-line: rgba(233, 169, 85, 0.34);
+  --live-ink: #17100a;
+
+  --danger: #e2776d;
+  --danger-quiet: rgba(226, 119, 109, 0.12);
+  --success: #7bc59c;
+  --info: #8fb7dd;
+
+  /* keycaps */
+  --key-bg: #1a2330;
+  --key-bg-hover: #212c3b;
+  --key-edge: #070a0e;
+  --key-edge-line: #2b3746;
+  --key-face: #dce4ef;
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-2: 0 8px 24px -8px rgba(0, 0, 0, 0.55);
+  --shadow-pop: 0 16px 40px -12px rgba(0, 0, 0, 0.7);
+
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 16px;
+
+  --font-sans: "Instrument Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, SFMono-Regular, monospace;
+
+  /* ---- motion: escala única do app (transitions.dev / polish) ---- */
+  --duration-stagger: 40ms;
+  --duration-micro: 80ms;
+  --duration-quick: 150ms;
+  --duration-fast: 250ms;
+  --duration-medium: 350ms;
+  --duration-slow: 400ms;
+  --duration-very-slow: 500ms;
+
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: ease-in-out;
+  --ease-out: ease-out;
+  --ease-linear: linear;
+  --ease-bounce: cubic-bezier(0.34, 1.36, 0.64, 1);
+  --ease-bounce-strong: cubic-bezier(0.34, 3.85, 0.64, 1);
+
+  --distance-micro: 4px;
+  --distance-base: 8px;
+  --distance-medium: 12px;
+
+  --scale-medium: 0.97;
+  --scale-small: 0.98;
+  --blur-small: 2px;
+  --blur-medium: 3px;
+}
+
+/* Tema claro: variante desenhada, não inversão.
+   Papel quente off-white + tinta escura + luar convertido em tinta-slate. */
+[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #f2efe8;
+  --bg-canvas: #ece8df;
+  --surface: #faf8f3;
+  --surface-raised: #ffffff;
+  --surface-hover: #f1ede4;
+  --surface-active: #e7e2d6;
+
+  --line: #ded8ca;
+  --line-strong: #c6bfb0;
+
+  --ink: #13161b;
+  --ink-2: #545c69;
+  --ink-3: #6b7481;
+
+  --accent: #2f3b4d;
+  --accent-strong: #1a2432;
+  --accent-quiet: rgba(47, 59, 77, 0.06);
+  --accent-line: rgba(47, 59, 77, 0.18);
+  --accent-ink: #fbfaf6;
+
+  --live: #9a5b16;
+  --live-strong: #7c4810;
+  --live-quiet: rgba(154, 91, 22, 0.1);
+  --live-line: rgba(154, 91, 22, 0.28);
+  --live-ink: #fff8ec;
+
+  --danger: #a33a31;
+  --danger-quiet: rgba(163, 58, 49, 0.09);
+  --success: #1f6a48;
+  --info: #2e5a85;
+
+  --key-bg: #ffffff;
+  --key-bg-hover: #f7f4ec;
+  --key-edge: #b8b0a0;
+  --key-edge-line: #d8d1c2;
+  --key-face: #2a2f37;
+
+  --shadow-1: 0 1px 2px rgba(40, 35, 25, 0.08);
+  --shadow-2: 0 8px 24px -10px rgba(40, 35, 25, 0.22);
+  --shadow-pop: 0 16px 40px -14px rgba(40, 35, 25, 0.28);
+}
