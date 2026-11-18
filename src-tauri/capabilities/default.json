@@ -3,5 +3,5 @@
   "identifier": "default",
   "description": "Permissões da janela de configuração",
   "windows": ["main"],
-  "permissions": ["core:default", "os:default"]
+  "permissions": ["core:default", "os:default", "dialog:allow-open", "dialog:allow-save"]
 }

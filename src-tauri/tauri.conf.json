@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
   "productName": "MoonDeck",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "identifier": "dev.moondeck.app",
   "build": {
     "frontendDist": "../dist",
@@ -20,11 +20,13 @@
         "minHeight": 600,
         "center": true,
         "resizable": true,
-        "fullscreen": false
+        "fullscreen": false,
+        "visible": false
       }
     ],
     "security": {
-      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: asset: http://asset.localhost; font-src 'self' data:; media-src 'self' asset: http://asset.localhost; connect-src 'self' ipc: http://ipc.localhost ws://localhost:1420"
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; connect-src 'self' ipc: http://ipc.localhost",
+      "devCsp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; connect-src 'self' ipc: http://ipc.localhost ws://localhost:1420 http://localhost:1420"
     }
   },
   "bundle": {
@@ -36,6 +38,11 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ]
+    ],
+    "publisher": "isaac-const",
+    "copyright": "Copyright (c) 2026 isaac-const",
+    "category": "Utility",
+    "shortDescription": "Deck de ações contextuais para teclas subutilizadas",
+    "longDescription": "Transforma teclas pouco usadas em um deck de ações por modo: sons, atalhos, macros, apps e efeitos de voz, com um overlay que mostra o modo ativo."
   }
 }

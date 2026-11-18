@@ -1,0 +1,14 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "overlay",
+  "description": "Permiss\u00f5es m\u00ednimas das camadas de overlay (HUD)",
+  "windows": [
+    "overlay"
+  ],
+  "permissions": [
+    "core:default",
+    "core:window:allow-close",
+    "core:window:allow-hide",
+    "core:window:allow-show"
+  ]
+}
