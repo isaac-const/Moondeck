@@ -14,11 +14,13 @@ pub struct InputDevice {
 }
 
 /// Nomes que identificam macropads e controladoras de teclas programáveis.
+#[cfg(target_os = "linux")]
 const MACROPAD_HINTS: [&str; 10] = [
     "macropad", "macro pad", "stream deck", "streamdeck", "keypad", "numpad", "vial", "qmk", "via ", "deck",
 ];
 
 /// Interfaces auxiliares de teclados e outros aparelhos, que não são teclados.
+#[cfg(target_os = "linux")]
 const IGNORED: [&str; 12] = [
     "consumer control",
     "system control",
@@ -34,6 +36,7 @@ const IGNORED: [&str; 12] = [
     "wmi",
 ];
 
+#[cfg(target_os = "linux")]
 fn classify(name: &str, keys: u32) -> Option<bool> {
     let lower = name.to_lowercase();
     if IGNORED.iter().any(|word| lower.contains(word)) {
@@ -79,7 +82,7 @@ pub fn list() -> Vec<InputDevice> {
     Vec::new()
 }
 
-#[cfg(test)]
+#[cfg(all(test, target_os = "linux"))]
 mod tests {
     use super::*;
 

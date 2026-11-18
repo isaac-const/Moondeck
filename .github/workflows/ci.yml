@@ -44,5 +44,11 @@ jobs:
           workspaces: src-tauri
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
+      # No Windows o executável de teste do Tauri não abre sem manifesto;
+      # lá basta garantir que compila.
       - run: cargo test
+        if: runner.os != 'Windows'
+        working-directory: src-tauri
+      - run: cargo check --all-targets
+        if: runner.os == 'Windows'
         working-directory: src-tauri
