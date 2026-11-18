@@ -81,7 +81,7 @@ You can repeat the tutorial under **General → Show tutorial**.
 
 ```bash
 pnpm install
-pnpm tauri dev      # full app
+pnpm tauri dev      # full app: starts the UI and the Rust side together
 pnpm dev            # UI only, in the browser, with sample data
 pnpm typecheck
 pnpm lint

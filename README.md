@@ -82,7 +82,7 @@ O tutorial pode ser repetido em **Geral → Rever tutorial**.
 
 ```bash
 pnpm install
-pnpm tauri dev      # app completo
+pnpm tauri dev      # app completo: sobe a interface e o Rust juntos
 pnpm dev            # só a interface, no navegador, com dados de exemplo
 pnpm typecheck
 pnpm lint
