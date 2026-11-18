@@ -1,9 +1,9 @@
 /**
  * Tema e movimento.
  *
- * Persistência provisória em localStorage (Fase 0). Na Fase 2 isso migra para
- * o config.json versionado, com o Rust como fonte da verdade — a API pública
- * deste módulo não muda, só o backend de leitura/escrita.
+ * Persistência em localStorage. A preferência de tema também existe no
+ * config.json (`general.theme`); a API pública deste módulo não depende de qual
+ * das duas é a fonte.
  */
 
 export const THEME_STORAGE_KEY = "moondeck.theme";
@@ -83,7 +83,7 @@ export function applyTheme(resolved: ResolvedTheme): void {
   const root = document.documentElement;
   root.dataset["theme"] = resolved;
   const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
-  if (meta) meta.content = resolved === "dark" ? "#090c10" : "#f2efe8";
+  if (meta) meta.content = resolved === "dark" ? "#0a0e13" : "#f2efe8";
 }
 
 /**

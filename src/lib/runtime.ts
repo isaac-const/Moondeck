@@ -8,7 +8,7 @@ export interface RuntimeInfo {
   arch: string | null;
 }
 
-const FALLBACK_VERSION = "0.1.0";
+const FALLBACK_VERSION = "1.0.0";
 
 /** `false` quando a UI é aberta no navegador (dev sem Tauri). */
 export function isTauri(): boolean {

@@ -1,7 +1,13 @@
-import { useState } from "react";
+import { Onboarding } from "@/features/onboarding/Onboarding";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Sidebar } from "@/components/layout/Sidebar";
-import { StatusBar } from "@/components/layout/StatusBar";
+import { ToastHost } from "@/components/ui/Toast";
+import { useToastStore } from "@/components/ui/toast-store";
+import { listen } from "@tauri-apps/api/event";
+import { useEngineStore } from "@/features/deck/engine";
+import { commands } from "@/lib/bindings";
+import { isTauri } from "@/lib/runtime";
 import { AboutScreen } from "@/features/about/AboutScreen";
 import { AppearanceScreen } from "@/features/appearance/AppearanceScreen";
 import { AudioScreen } from "@/features/audio/AudioScreen";
@@ -19,8 +25,48 @@ function initialView(): View {
 }
 
 export function Shell() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [view, setView] = useState<View>(initialView);
+  const toast = useToastStore((s) => s.message);
+  const dismissToast = useToastStore((s) => s.dismiss);
+  const push = useToastStore((s) => s.push);
+  const loadEngine = useEngineStore((s) => s.load);
+  const failure = useEngineStore((s) => s.failure);
+  const clearFailure = useEngineStore((s) => s.clearFailure);
+
+  useEffect(() => {
+    void loadEngine();
+  }, [loadEngine]);
+
+  // O menu da bandeja (feito no Rust) segue o idioma da interface.
+  useEffect(() => {
+    if (isTauri()) void commands.trayLanguage(i18n.language);
+  }, [i18n.language]);
+
+  // O overlay pede para abrir uma tela (ex.: engrenagem → Modos).
+  useEffect(() => {
+    if (!isTauri()) return;
+    let off: (() => void) | undefined;
+    let disposed = false;
+    void listen<string>("app://navigate", (event) => {
+      const match = views.find((candidate) => candidate === event.payload);
+      if (match) setView(match);
+    }).then((fn) => {
+      if (disposed) fn();
+      else off = fn;
+    });
+    return () => {
+      disposed = true;
+      off?.();
+    };
+  }, []);
+
+  // Uma ação disparada por tecla falhou (arquivo sumiu, ydotool ausente…).
+  useEffect(() => {
+    if (!failure) return;
+    push(`${t("actions.failed", { label: failure.label })} ${failure.error ?? ""}`.trim(), "danger");
+    clearFailure();
+  }, [failure, push, clearFailure, t]);
 
   return (
     <div className="flex h-full">
@@ -37,8 +83,10 @@ export function Shell() {
             <Screen view={view} />
           </div>
         </main>
-        <StatusBar />
       </div>
+
+      <Onboarding />
+      <ToastHost message={toast} onDismiss={dismissToast} />
     </div>
   );
 }

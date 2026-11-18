@@ -6,19 +6,29 @@ export type KeycapTone = "default" | "mode" | "live" | "ghost";
 export interface KeycapProps extends HTMLAttributes<HTMLElement> {
   tone?: KeycapTone;
   size?: "sm" | "md";
+  /** Desenha a tecla já apertada (a animação de descer é a transição do CSS). */
+  pressed?: boolean;
 }
 
 /**
  * Tecla física. É o elemento-assinatura do app: mono, caixa alta, borda
  * inferior mais grossa. `<kbd>` porque semanticamente é uma tecla.
  */
-export function Keycap({ tone = "default", size = "md", className, children, ...rest }: KeycapProps) {
+export function Keycap({
+  tone = "default",
+  size = "md",
+  pressed = false,
+  className,
+  children,
+  ...rest
+}: KeycapProps) {
   return (
     <kbd
       className={cn(
         "keycap",
         tone !== "default" && `keycap--${tone}`,
         size === "sm" && "keycap--sm",
+        pressed && "keycap--pressed",
         className,
       )}
       {...rest}

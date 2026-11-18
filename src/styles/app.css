@@ -36,8 +36,20 @@
   --color-success: var(--success);
   --color-info: var(--info);
 
+  /* Vocabulário "Luzeiro" (Figma): apelidos dos mesmos tokens, para que o
+     tema claro continue funcionando. bg-elevated = card/sidebar,
+     bg-surface = campo/hover. */
+  --color-bg-base: var(--bg);
+  --color-bg-elevated: var(--surface);
+  --color-bg-surface: var(--surface-raised);
+  --color-border-subtle: var(--line);
+  --color-text-primary: var(--ink);
+  --color-text-secondary: var(--ink-2);
+  --color-text-tertiary: var(--ink-3);
+  --color-accent-silver: var(--accent);
+  --color-accent-amber: var(--live);
+
   --font-sans: var(--font-sans);
-  --font-serif: var(--font-serif);
   --font-mono: var(--font-mono);
 
   --radius-sm: var(--r-sm);
@@ -107,6 +119,16 @@
     margin: 0;
   }
 
+  /* A janela do overlay é transparente: o WebKit não pode pintar fundo. */
+  html[data-surface="overlay"],
+  html[data-surface="overlay"] body,
+  html[data-surface="overlay"] #root {
+    background: transparent !important;
+  }
+  html[data-surface="overlay"] body {
+    overflow: hidden;
+  }
+
   button {
     font: inherit;
     color: inherit;
@@ -124,14 +146,6 @@
 }
 
 @layer utilities {
-  .t-display {
-    font-family: var(--font-serif);
-    font-size: 30px;
-    font-weight: 400;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-  }
-
   .t-h1 {
     font-size: 20px;
     font-weight: 600;

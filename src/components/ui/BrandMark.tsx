@@ -1,15 +1,16 @@
-import { useId } from "react";
+import { useId, type CSSProperties } from "react";
 
 export interface BrandMarkProps {
   size?: number;
   className?: string;
+  style?: CSSProperties;
 }
 
 /**
  * Marca: crescente. Duas formas, sem gradiente.
  * O id da máscara vem de `useId` porque a marca aparece em mais de um lugar.
  */
-export function BrandMark({ size = 18, className }: BrandMarkProps) {
+export function BrandMark({ size = 18, className, style }: BrandMarkProps) {
   const raw = useId();
   const maskId = `moon-${raw.replace(/[^a-zA-Z0-9_-]/g, "")}`;
 
@@ -21,6 +22,7 @@ export function BrandMark({ size = 18, className }: BrandMarkProps) {
       aria-hidden="true"
       focusable="false"
       className={className}
+      style={style}
     >
       <defs>
         <mask id={maskId}>
