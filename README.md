@@ -1,69 +1,103 @@
+<div align="center">
+
+<img src="docs/images/logo.svg" alt="MoonDeck" width="96" height="96">
+
 # MoonDeck
 
-Transforma teclas subutilizadas (`Home`, `PgUp`, `PgDn`, `End` e qualquer outra)
-em um deck de ações contextuais. Uma tecla troca a **camada**; as outras
-executam o que estiver mapeado naquela camada — som, atalho ou app. Um overlay
-flutuante mostra a camada ativa e ensina a posição das teclas.
+Deck de ações para as teclas que você quase não usa.
 
-App desktop (Tauri 2 + React 19 + Rust) para Linux, Windows e macOS.
+[![Licença: MIT](https://img.shields.io/badge/licen%C3%A7a-MIT-blue.svg)](LICENSE)
+![Sistemas](https://img.shields.io/badge/sistemas-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey)
+![Tauri](https://img.shields.io/badge/Tauri-2-24C8DB)
 
-## Rodar
+**Português** · [English](README.en.md)
 
-Requisitos: Node 22+, pnpm, Rust estável, e no Linux `webkit2gtk-4.1` + `gtk3`.
+</div>
+
+![Tela de modos](docs/images/modes.png)
+
+![Tela de aparência do overlay](docs/images/appearance.png)
+
+MoonDeck transforma teclas como `Home`, `PgUp`, `PgDn`, `End`, `F13`–`F24` e o
+numpad em um deck de ações organizado por **modos**. Uma tecla troca o modo; as
+outras executam o que estiver ligado a ela naquele modo. Um overlay mostra o modo
+ativo e as ações disponíveis.
+
+## Recursos
+
+- **Pensado para teclas sem uso e macropads:** `Home`, `PgUp`, `F13`–`F24`, numpad e as teclas de um macropad. No Linux, macropads conectados são detectados e a tela Teclas sugere como usá-los.
+- **Ações:** tocar som (mp3, wav, ogg, flac, m4a) com corte, fade e ganho; enviar
+  atalho; macro (atalhos, sons e esperas em sequência); abrir programa; efeito de voz.
+- **Modos:** até 12 modos com 8 ações cada, reordenáveis por arrasto. Só as
+  teclas do modo ativo são tomadas do sistema; as demais continuam normais.
+- **Tecla de modo:** um toque mostra o modo, o segundo troca. Segurar por 5
+  segundos liga o modo Off, em que só ela fica ativa.
+- **Overlay:** não rouba o foco. Posição, tempo, animação, temporizador em barra
+  ou anel, botões em linha ou quadrados, cores, imagem de fundo e
+  [CSS próprio](docs/custom-css.md). Temas podem ser salvos, exportados e importados.
+- **Voz:** 11 efeitos em tempo real (grave, agudo, monstro, esquilo, alienígena,
+  robô, rádio, sussurro, distorção, eco, caverna), também em modo
+  segurar-para-falar, e microfone virtual que leva os sons do deck para o Discord,
+  OBS e chamadas (Linux).
+- **Ícones por botão:** emoji, imagem, gif ou o ícone do programa aberto.
+- **Bandeja e início automático**, tutorial de primeira abertura, interface em
+  português e inglês, tema claro e escuro.
+
+## Suporte por sistema
+
+| | Linux | Windows | macOS |
+|---|:-:|:-:|:-:|
+| Teclas globais, sons, atalhos, macros, overlay | ✔ | ✔ | ✔ |
+| Microfone virtual e efeitos de voz | ✔ | — | — |
+| Lista de programas com ícone | ✔ | — | — |
+
+Detalhes, dependências e limites de cada sistema: [docs/platforms.md](docs/platforms.md).
+O uso diário foi no Linux (KDE Plasma, Wayland); Windows e macOS compilam, mas
+ainda precisam de testes em máquina real.
+
+## Instalação
+
+Baixe o instalador do seu sistema em **Releases**. Para compilar:
+
+```bash
+git clone https://github.com/isaac-const/Moondeck.git
+cd Moondeck
+pnpm install
+pnpm tauri build
+```
+
+Requisitos: Node 22+, pnpm, Rust estável. No Linux, também `webkit2gtk-4.1`,
+`gtk3` e `libayatana-appindicator`; para atalhos enviados, `ydotool`; para áudio,
+PipeWire.
+
+## Uso
+
+1. Abra o MoonDeck e siga o tutorial.
+2. Em **Modos**, crie um modo e adicione ações, cada uma com uma tecla.
+3. Aperte a tecla de modo (padrão: `Home`) para ver o overlay e use as teclas das ações.
+
+O tutorial pode ser repetido em **Geral → Rever tutorial**.
+
+## Desenvolvimento
 
 ```bash
 pnpm install
-pnpm tauri dev      # janela real
-pnpm dev            # só a UI no navegador (sem IPC)
+pnpm tauri dev      # app completo
+pnpm dev            # só a interface, no navegador, com dados de exemplo
 pnpm typecheck
 pnpm lint
-pnpm build
+cd src-tauri && cargo test   # também regenera src/lib/bindings.ts
 ```
 
-## Estado
+Estrutura e decisões: [docs/architecture.md](docs/architecture.md).
 
-| Fase | Escopo | Estado |
-|---|---|---|
-| 0 | Fundação: scaffold, design system, shell, tema, i18n | **concluída** |
-| 1 | Laboratório de plataforma (hotkeys, overlay, injeção, áudio) | próxima |
-| 2 | Núcleo em Rust: config versionada, máquina de modos, IPC tipado | |
-| 3 | Overlay HUD | |
-| 4 | Ações reais + mic virtual | |
-| 5 | Editores (modos, mapa tecla×modo com drag) | |
-| 6 | Aparência + editor de layout do overlay | |
-| 7 | Onboarding + i18n completo + revisão de acessibilidade | |
-| 8 | Tray, autostart, pausa de emergência, empacotamento | |
+## Segurança
 
-O que **não** existe ainda: hotkeys reais, overlay, áudio, persistência em disco.
-As telas marcam o que falta com um chip de fase — nada finge funcionar.
+- A configuração é gravada com permissão só do dono (Linux e macOS).
+- O CSS do overlay é validado e não carrega recursos externos.
+- Um deck importado pode abrir programas e enviar teclas: importe apenas de quem
+  você conhece.
 
-## Estrutura
+## Licença
 
-```
-src/
-├── app/            # shell e navegação
-├── components/
-│   ├── layout/     # sidebar, barra de status
-│   └── ui/         # primitivas do sistema (botão, keycap, segmented, switch…)
-├── features/       # uma pasta por tela de configuração
-├── i18n/           # PT-BR (fonte) + EN (tipado a partir do PT)
-├── lib/            # utilitários, dados de exemplo, info de plataforma
-├── styles/         # tokens, primitivas, base
-└── theme/          # tema e movimento
-src-tauri/          # backend Rust
-docs/               # design system e matriz de plataforma
-```
-
-## Decisões que valem saber
-
-- **`docs/platform-matrix.md`** — o brief assumia que o plugin de hotkeys resolve
-  Wayland. Não resolve. O documento lista o que foi verificado no código-fonte e
-  o que a Fase 1 precisa medir.
-- **`docs/design.md`** — a regra do âmbar (só estado), o orçamento da serifa, a
-  escala de movimento. Normativo: contrariar exige justificativa.
-- **TypeScript 6**, não 7: o `typescript-eslint` ainda não suporta o compilador
-  nativo, e lint funcionando vale mais que versão nova.
-- **Tailwind + CSS de componente**: Tailwind para layout, CSS para peças com
-  estado (as transições enumeram propriedades e ficariam ilegíveis inline).
-- **Persistência em `localStorage`** é provisória e morre na Fase 2, quando o
-  `config.json` versionado assumir.
+[MIT](LICENSE)
